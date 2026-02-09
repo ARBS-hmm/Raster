@@ -22,25 +22,25 @@ Python 3.10 / 3.11
 Manim Community Edition
 
 FFmpeg (for rendering videos)
-``
-📂 Project Structure
+```
+ ## 📂 Project Structure
 ComputerGraphics/
 │
 ├── Raster/
-│   ├── dda.py
-│   ├── bresenham.py
-│   ├── midpoint_circle.py
-│   ├── midpoint_ellipse.py
+│ ├── dda.py
+│ ├── bresenham.py
+│ ├── midpoint_circle.py
+│ ├── midpoint_ellipse.py
 │
 ├── .gitignore
 ├── README.md
-``
+```
 
 ⚠️ Rendered videos are excluded using .gitignore to keep the repository clean.
 
 ⚙️ Installation Guide
 1️⃣ Clone the repository
-git clone https://github.com/your-username/computer-graphics-manim.git
+https://github.com/ARBS-hmm/Raster.git
 cd computer-graphics-manim
 
 2️⃣ Create and activate virtual environment
