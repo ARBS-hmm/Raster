@@ -22,7 +22,7 @@ Python 3.10 / 3.11
 Manim Community Edition
 
 FFmpeg (for rendering videos)
-
+``
 📂 Project Structure
 ComputerGraphics/
 │
@@ -34,7 +34,7 @@ ComputerGraphics/
 │
 ├── .gitignore
 ├── README.md
-
+``
 
 ⚠️ Rendered videos are excluded using .gitignore to keep the repository clean.
 
