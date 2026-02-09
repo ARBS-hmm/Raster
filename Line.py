@@ -2,7 +2,7 @@ from manim import *
 
 rows,cols = 70,20
 
-def set_pixel(grid, i, j, cols, color=WHITE, opacity=1):
+def set_pixel(grid, i, j, cols, color=BLUE, opacity=1):
     index = i * cols + j
     grid[index].set_fill(color=color, opacity=opacity)
 
