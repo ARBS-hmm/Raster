@@ -1,0 +1,14 @@
+# Manim output folders
+media/
+videos/
+images/
+partial_movie_files/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+manim-env/
+venv/
+.env
