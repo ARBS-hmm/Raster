@@ -27,7 +27,7 @@ def get_pixel_color(grid, i, j):
         return grid[index].get_fill_color()
     return None
 
-def flood(grid, scene, x, y, boundary, delay=0.5):
+def boundaryfill(grid, scene, x, y, boundary, delay=0.5):
     start_color = get_pixel_color(grid, x, y)
     if start_color is None or start_color == boundary or start_color == BLUE:
         return
@@ -43,52 +43,64 @@ def flood(grid, scene, x, y, boundary, delay=0.5):
         current_color = grid[index].get_fill_color()
         
         if current_color == BLUE: 
+            set_pixel(grid, current_x, current_y, RED)
+            scene.wait(delay)
+            set_pixel(grid, current_x, current_y, BLUE)
             continue
             
         if current_color == boundary:
-            # FIXED: Added grid parameter
             set_pixel(grid, current_x, current_y, RED)
             scene.wait(delay)
-            set_pixel(grid, current_x, current_y, WHITE)
+            set_pixel(grid, current_x, current_y, boundary)
             continue
 
-        
-        # Skip if not the same color as starting point
         if current_color != start_color:
             continue
         
-        # Fill this pixel
         set_pixel(grid, current_x, current_y, color=BLUE)
-        
-        # Add configurable delay
         scene.wait(delay)
         
-        # Add neighbors to stack (4-directional)
         stack.append((current_x + 1, current_y))
         stack.append((current_x - 1, current_y))
         stack.append((current_x, current_y + 1))
         stack.append((current_x, current_y - 1))
 
-class Flood(Scene):
+    
+    scene.add(display)
+    scene.last_stack = display
+
+class Boundary(Scene):
     def construct(self):
         grid = VGroup()
-        pixel = 0.2
+        pixelwidth = 0.2
         
         # Create pixel grid
         for i in range(rows):
             for j in range(cols):
                 grid.add(
-                    Square(pixel)
+                    Square(pixelwidth)
                     .set_stroke(color=WHITE, opacity=1, width=0.5)
-                    .move_to([i * pixel, j * pixel, 0.0])
-                    .set_fill(color=BLACK, opacity=1)  # Start with black background
+                    .move_to([i * pixelwidth, j * pixelwidth, 0])
+                    .set_fill(color=BLACK, opacity=1)
                 )
 
-        # Keep your exact code display part
+        # Display C++ graphics.h flood-fill code
         code = VGroup()
         PREFIX = "●"  # forces spaces to be non-leading
         lines = [
-            "test",
+            "void boundaryFill(int x, int y, int boundaryColor, int fillColor){",
+            "    int currentColor = getpixel(x, y);",
+            "",
+            "    if (currentColor==boundaryColor||currentColor==fillColor)",
+            "        return;",
+            "",
+            "    putpixel(x, y, fillColor);",
+            "",
+            "    floodFill(x + 1, y, boundaryColor, fillColor);",
+            "    floodFill(x - 1, y, boundaryColor, fillColor);",
+            "    floodFill(x, y + 1, boundaryColor, fillColor);",
+            "    floodFill(x, y - 1, boundaryColor, fillColor);",
+            "}",
         ]
 
         for line in lines:
@@ -107,11 +119,9 @@ class Flood(Scene):
         self.add(grid)
         self.add(code)
 
-        # Draw a rectangle boundary
-        rectangle(grid, 10, 1, 20, 10)
+        rectangle(grid, 10, 1, 15, 7)
         self.wait(1)
         
-        # Perform flood fill
-        flood(grid, self, 13, 3, WHITE)
+        boundaryfill(grid, self, 13, 3, WHITE)
         
-        self.wait(10)
+        self.wait(5)

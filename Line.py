@@ -22,7 +22,6 @@ def bresenham(grid,scene,x0: int, y0: int, x1: int, y1: int):
             P+= (2*dy - 2*dx)
         x=x+1
 
-
 class GridLine(Scene):
     def construct(self):
         grid = VGroup()
